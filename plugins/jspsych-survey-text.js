@@ -30,6 +30,7 @@ jsPsych.plugins['survey-text'] = (function() {
     }
 	trial.hide = typeof trial.hide === 'undefined' ? false : trial.hide;
 	trial.video = typeof trial.video === 'undefined' ? "": trial.video;
+	trial.submit = typeof trial.submit === 'undefined' ? "Submit Answer": trial.submit;
 	
     // if any trial variables are functions
     // this evaluates the function and replaces
@@ -87,7 +88,7 @@ jsPsych.plugins['survey-text'] = (function() {
 			'class': 'jspsych-btn jspsych-survey-text'
 	   	}));
 	}
-    $("#jspsych-survey-text-next").html('Submit Answer');
+    $("#jspsych-survey-text-next").html(trial.submit);
     $("#jspsych-survey-text-next").click(function() {
       // measure response time
       var endTime = (new Date()).getTime();
