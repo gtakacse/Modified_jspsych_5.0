@@ -19,6 +19,7 @@ jsPsych.plugins['survey-likert'] = (function() {
 	trial.stim = typeof trial.stim === 'undefined' ? "" : trial.stim;
 	trial.condition = typeof trial.condition === 'undefined' ? "" : trial.condition;
 	trial.video = typeof trial.video === 'undefined' ? "" : trial.video;
+	trial.comment = typeof trial.comment === 'undefined' ? false: trial.comment;
 
     // if any trial variables are functions
     // this evaluates the function and replaces
@@ -54,6 +55,12 @@ jsPsych.plugins['survey-likert'] = (function() {
       options_string += '</ul>';
       form_element.append(options_string);
     }
+	
+	//comment
+	if (trial.comment == true){
+		display_element.append('<p class="comment"> If you would like to leave a comment, you can put it in the box below: </p>');
+		display_element.append('<textarea id="comment-text" cols="50" rows="4"></textarea>');
+	}
 
     // add submit button
     display_element.append($('<button>', {
@@ -68,6 +75,7 @@ jsPsych.plugins['survey-likert'] = (function() {
 
       // create object to hold responses
       var question_data = {};
+	  var comment_data = {};
       $("#jspsych-survey-likert-form .jspsych-survey-likert-opts").each(function(index) {
         var id = $(this).data('radio-group');
         var response = $('input[name="' + id + '"]:checked').val();
@@ -77,6 +85,11 @@ jsPsych.plugins['survey-likert'] = (function() {
         var obje = {};
         obje[id] = response;
         $.extend(question_data, obje);
+		//comment object
+		var comm = $('textarea').val();
+		var c_obje = {};
+		c_obje[id] = comm;
+		$.extend(comment_data, c_obje);
       });
 
       // save data
@@ -86,6 +99,7 @@ jsPsych.plugins['survey-likert'] = (function() {
 		  "stim": JSON.stringify(trial.stim),
 		  "condition": JSON.stringify(trial.condition),
           "responses": JSON.stringify(question_data),
+		  "comment": JSON.stringify(trial.correct)
       };
 
       display_element.html('');
