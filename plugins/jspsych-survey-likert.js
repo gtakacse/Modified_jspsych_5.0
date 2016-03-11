@@ -86,7 +86,7 @@ jsPsych.plugins['survey-likert'] = (function() {
         obje[id] = response;
         $.extend(question_data, obje);
 		//comment object
-		var comm = $('textarea').val();
+		var comm = document.getElementById('comment-text').value;
 		var c_obje = {};
 		c_obje[id] = comm;
 		$.extend(comment_data, c_obje);
@@ -99,7 +99,7 @@ jsPsych.plugins['survey-likert'] = (function() {
 		  "stim": JSON.stringify(trial.stim),
 		  "condition": JSON.stringify(trial.condition),
           "responses": JSON.stringify(question_data),
-		  "comment": JSON.stringify(trial.correct)
+		  "comment": JSON.stringify(comment_data)
       };
 
       display_element.html('');
