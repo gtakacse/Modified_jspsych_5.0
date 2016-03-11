@@ -29,6 +29,9 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
 	trial.comment = typeof trial.comment == 'undefined' ? false: trial.comment;
 	trial.correct = typeof trial.correct == 'undefined' ? "" : trial.correct;
 	trial.video = typeof trial.video == 'undefined' ? "" : trial.video;
+	trial.submit = typeof trial.submit == 'undefined' ? "Submit Answer" : trial.submit;
+	trial.com_text = typeof trial.com_text == 'undefined' ? "If you would like to leave a comment, you can put it in the box below:": trial.com_text;
+	
 
     // if any trial variables are functions
     // this evaluates the function and replaces
@@ -101,7 +104,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
 	
 	// add comment box
 	if (trial.comment == true){
-		$trial_form.append('<p class="comment"> If you would like to leave a comment, you can put it in the box below: </p>');
+		$trial_form.append('<p class="comment">' + trial.com_text + '</p>');
 		$trial_form.append('<textarea id="comment-text" cols="50" rows="4"></textarea>');
 	}
 
@@ -110,7 +113,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       'type': 'submit',
       'id': plugin_id_name + '-next',
       'class': plugin_id_name + ' jspsych-btn',
-      'value': 'Submit Answers'
+      'value': trial.submit
     }));
 
     $trial_form.submit(function(event) {

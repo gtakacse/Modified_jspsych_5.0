@@ -20,6 +20,8 @@ jsPsych.plugins['survey-likert'] = (function() {
 	trial.condition = typeof trial.condition === 'undefined' ? "" : trial.condition;
 	trial.video = typeof trial.video === 'undefined' ? "" : trial.video;
 	trial.comment = typeof trial.comment === 'undefined' ? false: trial.comment;
+	trial.submit = typeof trial.submit === 'undefined' ? "Submit Answer" : trial.submit;
+	trial.com_text = typeof trial.com_text === 'undefined' ? "If you would like to leave a comment, you can put it in the box below:": trial.com_text;
 
     // if any trial variables are functions
     // this evaluates the function and replaces
@@ -58,7 +60,7 @@ jsPsych.plugins['survey-likert'] = (function() {
 	
 	//comment
 	if (trial.comment == true){
-		display_element.append('<p class="comment"> If you would like to leave a comment, you can put it in the box below: </p>');
+		display_element.append('<p class="comment">' + trial.com_text + '</p>');
 		display_element.append('<textarea id="comment-text" cols="50" rows="4"></textarea>');
 	}
 
@@ -67,7 +69,7 @@ jsPsych.plugins['survey-likert'] = (function() {
       'id': 'jspsych-survey-likert-next',
       'class': 'jspsych-survey-likert jspsych-btn'
     }));
-    $("#jspsych-survey-likert-next").html('Submit Answers');
+    $("#jspsych-survey-likert-next").html(trial.submit);
     $("#jspsych-survey-likert-next").click(function() {
       // measure response time
       var endTime = (new Date()).getTime();
@@ -86,10 +88,13 @@ jsPsych.plugins['survey-likert'] = (function() {
         obje[id] = response;
         $.extend(question_data, obje);
 		//comment object
-		var comm = document.getElementById('comment-text').value;
-		var c_obje = {};
-		c_obje[id] = comm;
-		$.extend(comment_data, c_obje);
+		if (trial.comment == true){
+			var comm = document.getElementById('comment-text').value;
+			var c_obje = {};
+			c_obje[id] = comm;
+			$.extend(comment_data, c_obje);
+		}
+		
       });
 
       // save data
