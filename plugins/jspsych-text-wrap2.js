@@ -26,6 +26,7 @@ jsPsych.plugins.text_wrap2 = (function() {
 	trial.img2 = trial.img2 || "";
 	trial.bubble_l = trial.bubble_l || "";
 	trial.bubble_r = trial.bubble_r || "";
+	trial.hun = trial.hun || false;
 
     // if any trial variables are functions
     // this evaluates the function and replaces
@@ -34,8 +35,15 @@ jsPsych.plugins.text_wrap2 = (function() {
 
     // set the HTML of the display target to replaced_text.
     display_element.html(trial.text);
-	display_element.append('<audio id=sent1 src="../Audio/Eng/Shevaun/' +trial.audio1 +'" hidden="true">');
-	display_element.append('<audio id=sent2 src="../Audio/Eng/Celia/' +trial.audio2 +'" hidden="ture">');
+	if (trial.hun == true){
+		display_element.append('<audio id=sent1 src="../Audio/Hun/Dori/' +trial.audio1 +'" hidden="true">');
+		display_element.append('<audio id=sent2 src="../Audio/Hun/Edit/' +trial.audio2 +'" hidden="ture">');
+	}
+	else {
+		display_element.append('<audio id=sent1 src="../Audio/Eng/Shevaun/' +trial.audio1 +'" hidden="true">');
+		display_element.append('<audio id=sent2 src="../Audio/Eng/Celia/' +trial.audio2 +'" hidden="ture">');
+	}
+	
 	display_element.append('<img id="girl1" class="img_1" src="../' + trial.img1 + '">');
 	display_element.append('<img id="girl2" class="img_2" src="../' + trial.img2 + '">');
 	display_element.append('<img id="bubble_left" src="../' + trial.bubble_l + '">');

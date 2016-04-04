@@ -22,6 +22,7 @@ jsPsych.plugins.text_wrap1 = (function() {
 	trial.video = trial.video || "";
 	trial.img = trial.img || "";
 	trial.bubble = trial.bubble || "";
+	trial.hun = trial.hun || false;
 
 
     // if any trial variables are functions
@@ -31,7 +32,13 @@ jsPsych.plugins.text_wrap1 = (function() {
 
     // set the HTML of the display target to replaced_text.
     display_element.html(trial.text);
-	display_element.append('<audio id="sound" src="../Audio/Eng/Shevaun/' + trial.audio +'" hidden="true">');
+	
+	if (trial.hun==true){
+		display_element.append('<audio id="sound" src="../Audio/Hun/Dori/' + trial.audio +'" hidden="true">');
+	}
+	else{
+		display_element.append('<audio id="sound" src="../Audio/Eng/Shevaun/' + trial.audio +'" hidden="true">');
+	}
 	display_element.append('<img id="girl" src="../' + trial.img + '">');
 	display_element.append('<img id="bubble" src="../' + trial.bubble + '">')
 	
